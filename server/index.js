@@ -10,7 +10,7 @@ passport.use(new GoogleStrategy({
   clientSecret: keys.googleClientSecret,
   callbackURL: '/auth/google/callback'
 }, (accessToken) => {
-  console.log(accessToken);
+  console.log(accessToken); // the code from google and we use to get user profile information again
 }));
 
 app.get(
@@ -19,5 +19,11 @@ app.get(
     scope: ['profile', 'email']
   })
 );
+
+app.get(
+  '/auth/google/callback',
+  passport.authenticate('google')
+);
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
